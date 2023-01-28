@@ -1,11 +1,11 @@
 import requests
-
-response = requests.get("https://api.pushshift.io/reddit/search/submission/?q=tesla&subreddit=wallstreetbets")
-print(response.json())
+import time
+import json
 
 def get_request(url):
     """Get http request"""
     response = requests.get(url)
+    #Check whether pull is succesful
     assert response.status_code == 200
     return response.json()
 
@@ -23,8 +23,8 @@ def make_request(url, max_tries=5):
             print("Error.... trying to get request attempt {}".format(tries))
     return get_request(url)
 
-make_request("https://api.pushshift.io/reddit/search/submission/?subreddit=wallstreetbets")
+d = make_request("https://api.pushshift.io/reddit/search/comment/?q=amc&subreddit=wallstreetbets&ssize=1")
 
-words = ['cat','hat','mat']
-for w in words:
-    print(w)
+pretty_json = json.dumps(d, indent=2)
+
+print(pretty_json)
